@@ -1217,12 +1217,16 @@ static void a5xx_rbbm_err_irq(struct msm_gpu *gpu, u32 status)
 
 static void a5xx_uche_err_irq(struct msm_gpu *gpu)
 {
-	uint64_t addr = (uint64_t) gpu_read(gpu, REG_A5XX_UCHE_TRAP_LOG_HI);
+	uint64_t addr = (uint64_t) gpu_read(gpu, REG_A5XX_UCHE_TRAP_LOG_HI) << 32;
 
 	addr |= gpu_read(gpu, REG_A5XX_UCHE_TRAP_LOG_LO);
 
-	dev_err_ratelimited(gpu->dev->dev, "UCHE | Out of bounds access | addr=0x%llX\n",
-		addr);
+	dev_err_ratelimited(gpu->dev->dev,
+		"UCHE | Out of bounds access | addr=0x%llX gmem=[0x%X-0x%X] mode=0x%X\n",
+		addr,
+		gpu_read(gpu, REG_A5XX_UCHE_GMEM_RANGE_MIN_LO),
+		gpu_read(gpu, REG_A5XX_UCHE_GMEM_RANGE_MAX_LO),
+		gpu_read(gpu, REG_A5XX_UCHE_MODE_CNTL));
 }
 
 static void a5xx_gpmu_err_irq(struct msm_gpu *gpu)

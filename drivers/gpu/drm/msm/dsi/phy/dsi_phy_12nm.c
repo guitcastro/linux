@@ -418,9 +418,13 @@ static int dsi_pll_12nm_vco_prepare(struct clk_hw *hw)
 	int ret;
 
 	if (!pll_12nm->cached_state.vco_rate) {
-		DRM_DEV_ERROR(&pll_12nm->phy->pdev->dev,
-			      "DSI PLL 12nm: VCO rate not set\n");
-		return -EINVAL;
+		/*
+		 * VCO rate not yet configured — this happens during clock
+		 * framework init before the first modeset. Just return
+		 * success; the proper set_rate + prepare will be called
+		 * when the display pipeline is enabled.
+		 */
+		return 0;
 	}
 
 	DBG("DSI PLL 12nm: vco_prepare rate=%lu post_div=%d gp_div=%d pix_divhf=%d",
