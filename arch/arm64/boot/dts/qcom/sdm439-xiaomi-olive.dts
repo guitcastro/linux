@@ -100,6 +100,43 @@
 	status = "okay";
 };
 
+&gpu {
+	status = "okay";
+};
+
+&mdss {
+	status = "okay";
+};
+
+&mdss_dsi0 {
+	status = "okay";
+
+	vdda-supply = <&pm8953_l23>;
+	vddio-supply = <&pm8953_l5>;
+
+	panel@0 {
+		compatible = "novatek,nt36525b-olive";
+		reg = <0>;
+		reset-gpios = <&tlmm 60 GPIO_ACTIVE_LOW>;
+
+		port {
+			panel_in: endpoint {
+				remote-endpoint = <&mdss_dsi0_out>;
+			};
+		};
+	};
+};
+
+&mdss_dsi0_out {
+	data-lanes = <0 1 2 3>;
+	remote-endpoint = <&panel_in>;
+};
+
+&mdss_dsi0_phy {
+	status = "okay";
+	vddio-supply = <&pm8953_l6>;
+};
+
 &blsp1_spi3 {
 	status = "disabled";
 
@@ -121,7 +158,7 @@
 
 &blsp2_i2c1 {
 	status = "disabled";
-	
+
 	lm3697@36 {
 		compatible = "ti,lm3697";
 		reg = <0x36>;
