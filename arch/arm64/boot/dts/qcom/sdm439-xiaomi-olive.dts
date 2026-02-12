@@ -140,12 +140,23 @@
 };
 
 &blsp1_spi3 {
-	status = "disabled";
-	interrupts-extended = <&tlmm 65 IRQ_TYPE_EDGE_RISING>;
+	status = "okay";
 
 	/* ilitek,ili9881h@0 */
-	/* novatek,nt36525b@1 */
 	/* focaltech,ft8006s@2 */
+
+	touchscreen@0 {
+		compatible = "novatek,nt36525-ts";
+		reg = <0>;
+		spi-max-frequency = <8000000>;
+
+		interrupts-extended = <&tlmm 65 IRQ_TYPE_EDGE_RISING>;
+		reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
+
+		vcc-supply = <&pm8953_l10>;
+
+		firmware-name = "qcom/sdm439/xiaomi/olive/novatek_ts_fw.bin";
+	};
 };
 
 &blsp2_spi2 {
@@ -364,7 +375,7 @@
 };
 
 &usb_hs_phy {
-	vdd-supply = <&pm8953_l23>;
+	vcc-supply = <&pm8953_l23>;
 	vdda1p8-supply = <&pm8953_l7>;
 	vdda3p3-supply = <&pm8953_l13>;
 	status = "okay";
