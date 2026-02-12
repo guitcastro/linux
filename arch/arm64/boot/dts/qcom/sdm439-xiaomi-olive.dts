@@ -7,6 +7,7 @@
 
 #include <dt-bindings/arm/qcom,ids.h>
 #include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
 #include "sdm439.dtsi"
 #include "pm8953.dtsi"
 #include "pmi632.dtsi"
@@ -117,6 +118,7 @@
 	panel@0 {
 		compatible = "novatek,nt36525b-olive";
 		reg = <0>;
+		backlight = <&backlight>;
 		reset-gpios = <&tlmm 60 GPIO_ACTIVE_LOW>;
 
 		port {
@@ -139,6 +141,7 @@
 
 &blsp1_spi3 {
 	status = "disabled";
+	interrupts-extended = <&tlmm 65 IRQ_TYPE_EDGE_RISING>;
 
 	/* ilitek,ili9881h@0 */
 	/* novatek,nt36525b@1 */
@@ -157,28 +160,14 @@
 };
 
 &blsp2_i2c1 {
-	status = "disabled";
+	status = "okay";
 
-	lm3697@36 {
-		compatible = "ti,lm3697";
+	backlight: backlight@36 {
+		compatible = "kinetic,ktd3137";
 		reg = <0x36>;
-		#address-cells = <1>;
-		#size-cells = <0>;
 		enable-gpios = <&pm8953_gpios 4 GPIO_ACTIVE_HIGH>;
-		status = "disabled";
-
-		lm3697_leds: led@0 {
-			reg = <0>;
-			led-sources = <0 1 2>;
-			ti,brightness-resolution = <255>;
-			ramp-up-us = <200000>;
-			ramp-down-us = <200000>;
-			label = "white:backlight";
-			linux,default-trigger = "backlight";
-		};
+		default-brightness = <200>;
 	};
-
-	/* ktd3137@36 */
 };
 
 &pmi632_vib {
