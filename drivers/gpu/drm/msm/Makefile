@@ -153,6 +153,7 @@ msm-display-$(CONFIG_DRM_MSM_DSI) += dsi/dsi.o \
 			dsi/phy/dsi_phy.o
 
 msm-display-$(CONFIG_DRM_MSM_DSI_28NM_PHY) += dsi/phy/dsi_phy_28nm.o
+msm-display-$(CONFIG_DRM_MSM_DSI_12NM_PHY) += dsi/phy/dsi_phy_12nm.o
 msm-display-$(CONFIG_DRM_MSM_DSI_20NM_PHY) += dsi/phy/dsi_phy_20nm.o
 msm-display-$(CONFIG_DRM_MSM_DSI_28NM_8960_PHY) += dsi/phy/dsi_phy_28nm_8960.o
 msm-display-$(CONFIG_DRM_MSM_DSI_14NM_PHY) += dsi/phy/dsi_phy_14nm.o
@@ -212,6 +213,7 @@ DISPLAY_HEADERS = \
 	generated/dsi_phy_20nm.xml.h \
 	generated/dsi_phy_28nm_8960.xml.h \
 	generated/dsi_phy_28nm.xml.h \
+	generated/dsi_phy_12nm.xml.h \
 	generated/dsi.xml.h \
 	generated/hdmi.xml.h \
 	generated/mdp4.xml.h \

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://nouveau.freedesktop.org/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
+<import file="freedreno_copyright.xml"/>
+
+<domain name="DSI_12nm_PHY" width="32">
+	<reg32 offset="0x00014" name="T_TA_GO_TIM_COUNT"/>
+	<reg32 offset="0x00018" name="T_TA_SURE_TIM_COUNT"/>
+
+	<reg32 offset="0x000c0" name="HSTX_DRIV_INDATA_CTRL_CLKLANE"/>
+	<reg32 offset="0x000d4" name="HSTX_DATAREV_CTRL_CLKLANE"/>
+
+	<reg32 offset="0x00100" name="HSTX_DRIV_INDATA_CTRL_LANE0"/>
+	<reg32 offset="0x00114" name="HSTX_READY_DLY_DATA_REV_CTRL_LANE0"/>
+	<reg32 offset="0x00140" name="HSTX_DRIV_INDATA_CTRL_LANE1"/>
+	<reg32 offset="0x00154" name="HSTX_READY_DLY_DATA_REV_CTRL_LANE1"/>
+
+	<reg32 offset="0x00180" name="HSTX_CLKLANE_REQSTATE_TIM_CTRL"/>
+	<reg32 offset="0x00188" name="HSTX_CLKLANE_HS0STATE_TIM_CTRL"/>
+	<reg32 offset="0x0018c" name="HSTX_CLKLANE_TRALSTATE_TIM_CTRL"/>
+	<reg32 offset="0x00190" name="HSTX_CLKLANE_EXITSTATE_TIM_CTRL"/>
+	<reg32 offset="0x00194" name="HSTX_CLKLANE_CLKPOSTSTATE_TIM_CTRL"/>
+
+	<reg32 offset="0x001c0" name="HSTX_DATALANE_REQSTATE_TIM_CTRL"/>
+	<reg32 offset="0x001c8" name="HSTX_DATALANE_HS0STATE_TIM_CTRL"/>
+	<reg32 offset="0x001cc" name="HSTX_DATALANE_TRAILSTATE_TIM_CTRL"/>
+	<reg32 offset="0x001d0" name="HSTX_DATALANE_EXITSTATE_TIM_CTRL"/>
+
+	<reg32 offset="0x00200" name="HSTX_DRIV_INDATA_CTRL_LANE2"/>
+	<reg32 offset="0x00214" name="HSTX_READY_DLY_DATA_REV_CTRL_LANE2"/>
+	<reg32 offset="0x00240" name="HSTX_DRIV_INDATA_CTRL_LANE3"/>
+	<reg32 offset="0x00254" name="HSTX_READY_DLY_DATA_REV_CTRL_LANE3"/>
+
+	<reg32 offset="0x003e8" name="CTRL0"/>
+	<reg32 offset="0x003f0" name="SYS_CTRL"/>
+	<reg32 offset="0x003fc" name="REQ_DLY"/>
+</domain>
+
+<domain name="DSI_12nm_PHY_PLL" width="32">
+	<reg32 offset="0x00034" name="POWERUP_CTRL"/>
+	<reg32 offset="0x00038" name="PROP_CHRG_PUMP_CTRL"/>
+	<reg32 offset="0x0003c" name="INTEG_CHRG_PUMP_CTRL"/>
+	<reg32 offset="0x00044" name="ANA_TST_LOCK_ST_OVR_CTRL"/>
+	<reg32 offset="0x00048" name="VCO_CTRL"/>
+	<reg32 offset="0x0004c" name="GMP_CTRL_DIG_TST"/>
+	<reg32 offset="0x00050" name="PHA_ERR_CTRL_0"/>
+	<reg32 offset="0x00054" name="LOCK_FILTER"/>
+	<reg32 offset="0x00058" name="UNLOCK_FILTER"/>
+	<reg32 offset="0x0005c" name="INPUT_DIV_PLL_OVR"/>
+	<reg32 offset="0x00060" name="LOOP_DIV_RATIO_0"/>
+	<reg32 offset="0x00064" name="INPUT_LOOP_DIV_RAT_CTRL"/>
+	<reg32 offset="0x0006c" name="PRO_DLY_RELOCK"/>
+	<reg32 offset="0x00070" name="CHAR_PUMP_BIAS_CTRL"/>
+	<reg32 offset="0x00074" name="LOCK_DET_MODE_SEL"/>
+	<reg32 offset="0x0007c" name="ANA_PROG_CTRL"/>
+	<reg32 offset="0x00110" name="HS_FREQ_RAN_SEL"/>
+	<reg32 offset="0x00280" name="SLEWRATE_FSM_OVR_CTRL"/>
+	<reg32 offset="0x0028c" name="SLEWRATE_DDL_LOOP_CTRL"/>
+	<reg32 offset="0x00290" name="SLEWRATE_DDL_CYC_FRQ_ADJ_0"/>
+	<reg32 offset="0x002e4" name="PHA_ERR_CTRL_1"/>
+	<reg32 offset="0x002e8" name="LOOP_DIV_RATIO_1"/>
+	<reg32 offset="0x00328" name="SLEWRATE_DDL_CYC_FRQ_ADJ_1"/>
+	<reg32 offset="0x00360" name="SSC10"/>
+	<reg32 offset="0x00364" name="SSC11"/>
+	<reg32 offset="0x00368" name="SSC12"/>
+	<reg32 offset="0x0036c" name="SSC13"/>
+	<reg32 offset="0x00370" name="SSC14"/>
+	<reg32 offset="0x00374" name="SSC15"/>
+	<reg32 offset="0x00394" name="SSC0"/>
+	<reg32 offset="0x00398" name="SSC1"/>
+	<reg32 offset="0x0039c" name="SSC2"/>
+	<reg32 offset="0x003a0" name="SSC3"/>
+	<reg32 offset="0x003a4" name="SSC4"/>
+	<reg32 offset="0x003a8" name="SSC5"/>
+	<reg32 offset="0x003ac" name="SSC6"/>
+	<reg32 offset="0x003b0" name="SSC7"/>
+	<reg32 offset="0x003b4" name="SSC8"/>
+	<reg32 offset="0x003b8" name="SSC9"/>
+	<reg32 offset="0x003e0" name="STAT0">
+		<bitfield name="PLL_RDY" pos="1" type="boolean"/>
+	</reg32>
+	<reg32 offset="0x003e8" name="CTRL0"/>
+	<reg32 offset="0x003f0" name="SYS_CTRL"/>
+	<reg32 offset="0x003f8" name="PLL_CTRL"/>
+</domain>
+
+</database>
