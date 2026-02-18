@@ -992,18 +992,14 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
 		a5xx_flush(gpu, gpu->rb[0], true);
 		if (!a5xx_idle(gpu, gpu->rb[0]))
 			return -EINVAL;
-	} else if (ret == -ENODEV) {
+	} else {
 		/*
-		 * This device does not use zap shader (but print a warning
-		 * just in case someone got their dt wrong.. hopefully they
-		 * have a debug UART to realize the error of their ways...
-		 * if you mess this up you are about to crash horribly)
+		 * No zap shader - use SECVID_TRUST_CNTL to exit secure mode.
+		 * This handles -ENODEV (no zap in DT) and -ENOENT (fw missing).
 		 */
 		dev_warn_once(gpu->dev->dev,
-			"Zap shader not enabled - using SECVID_TRUST_CNTL instead\n");
+			"Zap shader not available (ret=%d) - using SECVID_TRUST_CNTL instead\n", ret);
 		gpu_write(gpu, REG_A5XX_RBBM_SECVID_TRUST_CNTL, 0x0);
-	} else {
-		return ret;
 	}
 
 	/* Last step - yield the ringbuffer */
