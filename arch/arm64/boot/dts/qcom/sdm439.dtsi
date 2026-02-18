@@ -8,9 +8,26 @@
 /delete-node/ &cpu_opp_table_c1;
 /delete-node/ &pll_opp_table_c0;
 /delete-node/ &pll_opp_table_c1;
-/delete-node/ &adreno_smmu;
 
 / {
+	reserved-memory {
+		zap_shader_region: zap@81800000 {
+			compatible = "shared-dma-pool";
+			reg = <0x0 0x81800000 0x0 0x2000>;
+			no-map;
+		};
+
+		ramoops@81900000 {
+			compatible = "ramoops";
+			reg = <0x0 0x81900000 0x0 0x100000>;
+			console-size = <0x40000>;
+			record-size = <0x40000>;
+			ftrace-size = <0x0>;
+			pmsg-size = <0x40000>;
+			ecc-size = <0x0>;
+		};
+	};
+
 	cpu_opp_table_c0: opp-table-c0 {
 		compatible = "operating-points-v2";
 		opp-shared;
@@ -118,45 +135,20 @@
 	};
 };
 
+&adreno_smmu {
+	status = "disabled";
+};
+
 &gpu {
-	iommus = <&adreno_smmu 0>;
+	/delete-property/ iommus;
+
+	zap-shader {
+		memory-region = <&zap_shader_region>;
+	};
 };
 
 &gcc {
 	compatible = "qcom,gcc-sdm439";
-};
-
-&soc {
-	adreno_smmu: iommu@1c48000 {
-		compatible = "qcom,msm8953-iommu", "qcom,msm-iommu-v2";
-		ranges = <0 0x01c48000 0x8000>;
-
-		clocks = <&gcc GCC_OXILI_AHB_CLK>,
-			 <&gcc GCC_BIMC_GFX_CLK>;
-		clock-names = "iface", "bus";
-
-		power-domains = <&gcc OXILI_CX_GDSC>;
-
-		qcom,iommu-secure-id = <18>;
-
-		#address-cells = <1>;
-		#iommu-cells = <1>;
-		#size-cells = <1>;
-
-		/* gfx3d_user */
-		iommu-ctx@0 {
-			compatible = "qcom,msm-iommu-v2-ns";
-			reg = <0x0000 0x1000>;
-			interrupts = <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>;
-		};
-
-		/* gfx3d_secure */
-		iommu-ctx@2000 {
-			compatible = "qcom,msm-iommu-v2-sec";
-			reg = <0x2000 0x1000>;
-			interrupts = <GIC_SPI 233 IRQ_TYPE_LEVEL_HIGH>;
-		};
-	};
 };
 
 &mdss_dsi0_phy {
