@@ -110,7 +110,7 @@
 };
 
 &mdss_dsi0 {
-	status = "okay";
+	status = "disabled";
 
 	vdda-supply = <&pm8953_l23>;
 	vddio-supply = <&pm8953_l5>;
@@ -135,7 +135,7 @@
 };
 
 &mdss_dsi0_phy {
-	status = "okay";
+	status = "disabled";
 	vddio-supply = <&pm8953_l6>;
 };
 
@@ -375,7 +375,7 @@
 };
 
 &usb_hs_phy {
-	vcc-supply = <&pm8953_l23>;
+	vdd-supply = <&pm8953_l23>;
 	vdda1p8-supply = <&pm8953_l7>;
 	vdda3p3-supply = <&pm8953_l13>;
 	status = "okay";
