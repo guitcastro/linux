@@ -417,6 +417,9 @@ static int dsi_pll_12nm_vco_prepare(struct clk_hw *hw)
 	u32 data;
 	int ret;
 
+	if (unlikely(pll_12nm->phy->pll_on))
+		return 0;
+
 	if (!pll_12nm->cached_state.vco_rate) {
 		/*
 		 * VCO rate not yet configured — this happens during clock
@@ -449,6 +452,8 @@ static int dsi_pll_12nm_vco_prepare(struct clk_hw *hw)
 	writel(data, pll_base + REG_DSI_12nm_PHY_PLL_SSC0);
 	wmb(); /* ensure committed */
 
+	pll_12nm->phy->pll_on = true;
+
 	return 0;
 }
 
@@ -457,6 +462,9 @@ static void dsi_pll_12nm_vco_unprepare(struct clk_hw *hw)
 	struct dsi_pll_12nm *pll_12nm = to_pll_12nm(hw);
 	void __iomem *pll_base = pll_12nm->phy->pll_base;
 	u32 data;
+
+	if (unlikely(!pll_12nm->phy->pll_on))
+		return;
 
 	/* Disable GP_CLK_EN */
 	data = readl(pll_base + REG_DSI_12nm_PHY_PLL_SSC0);
@@ -477,6 +485,8 @@ static void dsi_pll_12nm_vco_unprepare(struct clk_hw *hw)
 	writel(data, pll_base + REG_DSI_12nm_PHY_PLL_POWERUP_CTRL);
 	ndelay(500);
 	wmb(); /* ensure committed */
+
+	pll_12nm->phy->pll_on = false;
 }
 
 static long dsi_pll_12nm_clk_round_rate(struct clk_hw *hw, unsigned long rate,
@@ -538,6 +548,8 @@ static int dsi_12nm_pll_restore_state(struct msm_dsi_phy *phy)
 	data |= BIT(6);
 	writel(data, phy->pll_base + REG_DSI_12nm_PHY_PLL_SSC0);
 	wmb(); /* ensure committed */
+
+	phy->pll_on = true;
 
 	return 0;
 }
