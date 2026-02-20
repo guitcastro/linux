@@ -219,6 +219,10 @@ adreno_iommu_create_vm(struct msm_gpu *gpu,
 	start = max_t(u64, SZ_16M, geometry->aperture_start);
 	size = geometry->aperture_end - start + 1;
 
+	dev_info(&pdev->dev,
+		"adreno_iommu_create_vm: aperture=[%llx-%llx] vm_start=%llx vm_size=%llx\n",
+		geometry->aperture_start, geometry->aperture_end, start, size);
+
 	vm = msm_gem_vm_create(gpu->dev, mmu, "gpu", start & GENMASK_ULL(48, 0),
 			       size, true);
 

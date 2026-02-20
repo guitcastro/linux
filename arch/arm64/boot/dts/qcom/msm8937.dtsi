@@ -1313,8 +1313,7 @@
 		};
 
 		adreno_smmu: iommu@1c40000 {
-			compatible = "qcom,adreno-smmu",
-				     "qcom,smmu-v2";
+			compatible = "qcom,adreno-smmu", "qcom,smmu-v2";
 			reg = <0x1c40000 0x10000>;
 
 			#global-interrupts = <0>;

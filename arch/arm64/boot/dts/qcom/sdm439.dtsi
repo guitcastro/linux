@@ -11,12 +11,6 @@
 
 / {
 	reserved-memory {
-		zap_shader_region: zap@81800000 {
-			compatible = "shared-dma-pool";
-			reg = <0x0 0x81800000 0x0 0x2000>;
-			no-map;
-		};
-
 		ramoops@81900000 {
 			compatible = "ramoops";
 			reg = <0x0 0x81900000 0x0 0x100000>;
@@ -136,16 +130,10 @@
 };
 
 &adreno_smmu {
-	status = "disabled";
+	status = "okay";
 };
 
-&gpu {
-	/delete-property/ iommus;
-
-	zap-shader {
-		memory-region = <&zap_shader_region>;
-	};
-};
+/* GPU enabled via olive.dts */
 
 &gcc {
 	compatible = "qcom,gcc-sdm439";

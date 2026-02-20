@@ -997,7 +997,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
 		 * No zap shader - use SECVID_TRUST_CNTL to exit secure mode.
 		 * This handles -ENODEV (no zap in DT) and -ENOENT (fw missing).
 		 */
-		dev_warn_once(gpu->dev->dev,
+		dev_warn(gpu->dev->dev,
 			"Zap shader not available (ret=%d) - using SECVID_TRUST_CNTL instead\n", ret);
 		gpu_write(gpu, REG_A5XX_RBBM_SECVID_TRUST_CNTL, 0x0);
 	}
