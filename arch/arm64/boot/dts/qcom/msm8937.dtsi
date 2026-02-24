@@ -231,6 +231,12 @@
 		#address-cells = <2>;
 		#size-cells = <2>;
 
+		zap_shader_region: zap@84000000 {
+			compatible = "shared-dma-pool";
+			reg = <0x0 0x84000000 0x0 0x800000>;
+			no-map;
+		};
+
 		qseecom_mem: reserved@85b00000 {
 			reg = <0x0 0x85b00000 0x0 0x800000>;
 			no-map;
@@ -1200,6 +1206,10 @@
 					opp-supported-hw = <0xFF>;
 					required-opps = <&rpmpd_opp_turbo>;
 				};
+			};
+
+			zap-shader {
+				memory-region = <&zap_shader_region>;
 			};
 		};
 
